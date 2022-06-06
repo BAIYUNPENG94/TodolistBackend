@@ -5,7 +5,7 @@ async function run() {
 
 	try {
 		//This needs to be verified tonight.
-		connection = await oracledb.getConnection({ user: "system", password: "taiho", connectionString: "localhost:1521"});
+		connection = await oracledb.getConnection({ user: "system", password: "taiho", connectionString: "192.168.2.120:1521/XE"});
 
 		console.log("connect SUCCESS");
 
