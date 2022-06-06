@@ -1,0 +1,24 @@
+{
+  "name": "todolistbackend",
+  "version": "1.0.0",
+  "description": "Backend part of Todolist App. Link to an Oracle Database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BAIYUNPENG94/TodolistBackend.git"
+  },
+  "keywords": [
+    "Oracle",
+    "Todolist",
+    "Backend"
+  ],
+  "author": "JimBai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BAIYUNPENG94/TodolistBackend/issues"
+  },
+  "homepage": "https://github.com/BAIYUNPENG94/TodolistBackend#readme"
+}
