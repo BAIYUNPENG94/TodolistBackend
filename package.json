@@ -15,6 +15,9 @@
     "Todolist",
     "Backend"
   ],
+  "dependencies": {
+    "oracledb": "^5.1.0"
+  },
   "author": "JimBai",
   "license": "ISC",
   "bugs": {
