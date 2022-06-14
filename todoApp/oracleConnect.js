@@ -62,6 +62,7 @@ const dbConfig = require('./oracleConfig.js');
 //}
 
 function Connection() {
+  this.pool = null;
 
   this.init = async function() {
     try {
@@ -89,6 +90,8 @@ function Connection() {
         // enableStatistics: false // record pool usage for oracledb.getPool().getStatistics() and logStatistics()
       });
       console.log('Connection pool started');
+      this.pool = oracledb.getPool('testPool');
+      console.log('Pool has successfully required');
   
       // Now the pool is running, it can be used
       //await dostuff();
@@ -142,6 +145,19 @@ function Connection() {
     }
   }
 
+  this.acquire = function(callback) {
+    try {
+      this.conn = this.pool.getConnection((err, connection) => {
+        callback(err, connection);
+      });
+    } catch (err) {
+      console.log("Problem 001: ", err.message);
+    } finally {
+      this.conn.close();
+    }
+  }
+
+  //testCPInternal Function is only for any test
   this.testCPInternal = function() {
     try {
         let pool = oracledb.getPool('testPool');
