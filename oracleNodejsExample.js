@@ -31,9 +31,17 @@ async function run() {
 			["task 5", 1]
 		];
 
-		let result = await connection.executeMany(sql, rows);
+		//let result = await connection.executeMany(sql, rows);
+		let xx = await connection.execute(`INSERT INTO TODOITEM (DESCRIPTION, DONE) VALUES (:1, :2)`, ["task X", 1], (err, result) => {
+                    console.log("[TEST] [CREATE] function test request arrived");
+                    if (err) {
+                        console.log('Problem 0043: ', err.message);
+                    } else {
+                        console.log('CREATE SUCCESS: ', result)
+                    }
+                });
 
-		console.log(result.rowsAffected, "Rows Inserted");
+		//console.log(result.rowsAffected, "Rows Inserted");
 
 		connection.commit();
 
