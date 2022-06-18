@@ -153,7 +153,8 @@ function Connection() {
     } catch (err) {
       console.log("Problem 001: ", err.message);
     } finally {
-      this.conn.close();
+      //TODO: close function has some problem?
+      //this.conn.close();
     }
   }
 

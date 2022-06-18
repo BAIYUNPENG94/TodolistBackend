@@ -12,6 +12,7 @@ function Todo() {
                         console.log('Problem 0041: ', err.message);
                     } else {
                         console.log('GET SUCCESS: ', result)
+                        res.header("Access-Control-Allow-Origin", "*");
                         res.send(result);
                     }
                 })
