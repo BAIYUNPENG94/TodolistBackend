@@ -65,18 +65,24 @@ function Todo() {
         })
     };
 
-    this.update = function(sourceName, id, res) {
+    this.update = function(sourceData, id, res) {
         connection.acquire((err, conn) => {
             if (err) {
                 console.log('Problem 004: ', err.message);
             } else {
-                conn.execute(`UPDATE TODOITEM SET :SOURCENAME WHERE ID = :ID`, [sourceName, id], (err, res) => {
-                    conn.close({drop: false});
+                sourceDes = sourceData[0];
+                sourceDone = sourceData[1];
+                conn.execute(`UPDATE TODOITEM SET 
+                                description = :1,
+                                done = :2
+                             WHERE ID = :ID`, [sourceDes, sourceDone, id], (err, result) => {
+                    //conn.close({drop: false});
                     if (err) {
                         res.header("Access-Control-Allow-Origin", "*");
                         res.send({status:1, message:'Update fail'});
                         console.log('Problem 0044: ', err.message);
                     } else {
+                        conn.commit();
                         res.header("Access-Control-Allow-Origin", "*");
                         res.send({status:0, message:'Update SUCCESS'});
                         console.log('Update SUCCESS: ', result);
@@ -87,17 +93,18 @@ function Todo() {
     };
 
     this.delete = function(id, res) {
-        connection.require((err, conn) => {
+        connection.acquire((err, conn) => {
             if (err) {
                 console.log('Problem 004: ', err.message);
             } else {
-                conn.execute(`DELETE FROM TODOITEM WHERE ID = :ID`, [id], (err, res) => {
-                    conn.close({drop: false});
+                conn.execute(`DELETE FROM TODOITEM WHERE ID = :ID`, [id], (err, result) => {
+                    //conn.close({drop: false});
                     if (err) {
                         res.header("Access-Control-Allow-Origin", "*");
                         res.send({status:1, message:'Delete fail'});
                         console.log('Problem 0045: ', err.message);
                     } else {
+                        conn.commit();
                         res.header("Access-Control-Allow-Origin", "*");
                         res.send({status:0, message:'Delete SUCCESS'});
                         console.log('Delete SUCCESS: ', result);
