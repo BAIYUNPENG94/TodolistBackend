@@ -12,7 +12,7 @@ module.exports = {
 			todo.create(req.body.content, res);
 		});
 		app.put('/todo/:id', (req, res) => {
-			todo.update(req.body.name, req.params.id, res);
+			todo.update(req.body.content, req.params.id, res);
 		});
 		app.delete('/todo/:id', (req, res) => {
 			todo.delete(req.params.id, res);
