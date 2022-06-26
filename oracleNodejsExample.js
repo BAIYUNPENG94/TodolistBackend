@@ -9,26 +9,26 @@ async function run() {
 
 		console.log("connect SUCCESS");
 
-		//await connection.execute(`begin
-		//	execute immediate 'drop table todoitem';
-		//	exception when others then if sqlcode <> -942 then raise; end if;
-		//	end;`);
+		await connection.execute(`begin
+			execute immediate 'drop table TODOITEM';
+			exception when others then if sqlcode <> -942 then raise; end if;
+			end;`);
 
-		//await connection.execute(` create table todoitem (
-		//		id number generated always as identity,
-		//		description varchar2(4000),
-		//		creation_ts timestamp with time zone default current_timestamp,
-		//		done number(1, 0),
-		//		primary key (id))`);
+		await connection.execute(` create table TODOITEM (
+				id number,
+				title varchar2(4000),
+				comp varchar2(4000),
+				pior varchar2(4000),
+				due varchar2(4000),
+				person varchar2(4000),
+				content varchar2(4000),
+				primary key (id)
+		)`);
 		
-		const sql = 'insert into todoitem (description, done) values (:1, :2)';
+		const sql = 'insert into TODOITEM (id, title, comp, pior, due, person, content) values (:1, :2, :3, :4, :5, :6, :7)';
 
 		const rows = [
-			["task 1", 1],
-			["task 2", 0],
-			["task 3", 1],
-			["task 4", 0],
-			["task 5", 1]
+			[1, "test 1", "90", "First", "xx-xx-xx", "Jim", "ContentForTest"],
 		];
 
 		//let result = await connection.executeMany(sql, rows);
@@ -46,7 +46,7 @@ async function run() {
 		connection.commit();
 
 		result = await connection.execute(
-			`select description, done from todoitem`,
+			`select * from TODOITEM`,
 			[],
 			{ resultSet: true, outFormat: oracledb.OUT_FORMAT_OBJECT }
 		);
@@ -55,10 +55,7 @@ async function run() {
 		let row;
 
 		while ((row = await rs.getRow())) {
-			if (row.DONE)
-				console.log(row.DESCRIPTION, "is done");
-			else
-				console.log(row.DESCRIPTION, "is Not done");
+			console.log(row);
 		}
 
 		await rs.close();
