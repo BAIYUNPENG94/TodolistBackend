@@ -1,5 +1,15 @@
 var connection = require ('./oracleConnect');
 
+const dbTableName  = 'TODOITEM';
+const dbTableCols  = '(id, title, comp, pior, due, person, content)';
+const dbInsertPlug = '(:1, :2, :3, :4, :5, :6, :7)';
+
+const sqlGet     = 'SELECT * FROM ' + dbTableName;
+const sqlGetByID = 'SELECT * FROM ' + dbTableName + ' WHERE ID = :ID';
+const sqlCreate  = 'INSERT INTO ' + dbTableName + dbTableCols + ' values ' + dbInsertPlug;
+const sqlUpdate  = 'UPDATE' + dbTableName + ' SET ' + statement + ' WHERE ID = :ID'; //This one needs to be test
+const sqlDelete  = 'DELETE FROM TODOITEM WHERE ID = :ID';
+
 function Todo() {
     this.get = function(res) {
         connection.acquire((err, conn) => {
