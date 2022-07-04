@@ -16,7 +16,7 @@ function Todo() {
             if (err) {
                 console.log('Problem 004: ', err.message);
             } else {
-                conn.execute(`SELECT * FROM TODOITEM`, (err, result) => {
+                conn.execute(sqlGet, (err, result) => {
                     console.log("[TEST] [GET] function test request arrived");
                     conn.close({drop: false});
                     if (err) {
@@ -36,7 +36,7 @@ function Todo() {
             if (err) {
                 console.log('Problem 004: ', err.message);
             } else {
-                conn.execute(`SELECT * FROM TODOITEM WHERE ID = :ID`, [id], (err, result) => {
+                conn.execute(sqlGetByID, [id], (err, result) => {
                     console.log("[TEST] [GET BY ID] function test request arrived");
                     //conn.close({drop: false});
                     if (err) {
@@ -56,7 +56,7 @@ function Todo() {
             if (err) {
                 console.log('Problem 004: ', err.message);
             } else {
-                conn.execute(`insert into todoitem (description, done) values (:1, :2)`, todo, (err, result) => {
+                conn.execute(sqlCreate, todo, (err, result) => {
                     console.log("[TEST] [CREATE] function test request arrived");
                     //conn.close({drop: false});
                     if (err) {
@@ -75,6 +75,7 @@ function Todo() {
         })
     };
 
+    //This need to be reviewed, better to generate sql statement from frontend side
     this.update = function(sourceData, id, res) {
         connection.acquire((err, conn) => {
             if (err) {
@@ -107,7 +108,8 @@ function Todo() {
             if (err) {
                 console.log('Problem 004: ', err.message);
             } else {
-                conn.execute(`DELETE FROM TODOITEM WHERE ID = :ID`, [id], (err, result) => {
+                //delete by id(key)
+                conn.execute(sqlDelete, [id], (err, result) => {
                     //conn.close({drop: false});
                     if (err) {
                         res.header("Access-Control-Allow-Origin", "*");
